@@ -1,0 +1,13 @@
+hazelcast:
+  cluster-name: lab-cluster
+
+  network:
+    join:
+      multicast:
+        enabled: true
+
+  cp-subsystem:
+    cp-member-count: 3
+    group-size: 3
+    session-time-to-live-seconds: 30
+    session-heartbeat-interval-seconds: 5
