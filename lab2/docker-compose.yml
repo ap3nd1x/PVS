@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  hz1:
+    image: hazelcast/hazelcast:5.4.0
+    container_name: hz1
+    environment:
+      - HZ_CLUSTERNAME=lab-cluster
+      - HAZELCAST_CONFIG=/opt/hazelcast/config/hazelcast.yaml
+    volumes:
+      - ./hazelcast.yaml:/opt/hazelcast/config/hazelcast.yaml
+    ports:
+      - "5701:5701"
+
+  hz2:
+    image: hazelcast/hazelcast:5.4.0
+    container_name: hz2
+    environment:
+      - HZ_CLUSTERNAME=lab-cluster
+      - HAZELCAST_CONFIG=/opt/hazelcast/config/hazelcast.yaml
+    volumes:
+      - ./hazelcast.yaml:/opt/hazelcast/config/hazelcast.yaml
+    ports:
+      - "5702:5701"
+
+  hz3:
+    image: hazelcast/hazelcast:5.4.0
+    container_name: hz3
+    environment:
+      - HZ_CLUSTERNAME=lab-cluster
+      - HAZELCAST_CONFIG=/opt/hazelcast/config/hazelcast.yaml
+    volumes:
+      - ./hazelcast.yaml:/opt/hazelcast/config/hazelcast.yaml
+    ports:
+      - "5703:5701"
