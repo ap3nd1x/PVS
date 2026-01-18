@@ -1,0 +1,47 @@
+services:
+  cassandra-1:
+    image: cassandra:latest
+    container_name: cassandra-1
+    environment:
+      - CASSANDRA_SEEDS=cassandra-1
+      - CASSANDRA_CLUSTER_NAME=MyCluster
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=DC1
+      # Ограничиваем память!
+      - MAX_HEAP_SIZE=512M
+      - HEAP_NEWSIZE=100M
+    ports:
+      - 9042:9042
+    healthcheck:
+      test: ["CMD", "cqlsh", "-e", "describe keyspaces"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  cassandra-2:
+    image: cassandra:latest
+    container_name: cassandra-2
+    environment:
+      - CASSANDRA_SEEDS=cassandra-1
+      - CASSANDRA_CLUSTER_NAME=MyCluster
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=DC1
+      - MAX_HEAP_SIZE=512M
+      - HEAP_NEWSIZE=100M
+    depends_on:
+      cassandra-1:
+        condition: service_healthy
+
+  cassandra-3:
+    image: cassandra:latest
+    container_name: cassandra-3
+    environment:
+      - CASSANDRA_SEEDS=cassandra-1
+      - CASSANDRA_CLUSTER_NAME=MyCluster
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=DC1
+      - MAX_HEAP_SIZE=512M
+      - HEAP_NEWSIZE=100M
+    depends_on:
+      cassandra-1:
+        condition: service_healthy
